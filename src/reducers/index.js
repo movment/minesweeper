@@ -102,7 +102,7 @@ const reducer = (state = initialState, action) => {
     case FINISH_GAME:
       return {
         ...state,
-        record: action.data.sec,
+        record: action.data.second,
       };
     case START_GAME:
       return {

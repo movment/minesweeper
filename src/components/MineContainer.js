@@ -27,12 +27,19 @@ const MineContainer = ({
   start,
 }) => {
   const [reset, setReset] = useState(false);
+  const [timer, setTimer] = useState(null);
+  const [second, setSecond] = useState(0);
 
   // 초기화
   const onReset = useCallback(() => {
     setReset(false);
     resetGame();
-  }, [setReset, resetGame]);
+    if (timer) {
+      clearInterval(timer);
+    }
+    setTimer(null);
+    setSecond(0);
+  }, [setReset, resetGame, timer]);
 
   // 왼쪽 버튼 클릭
   const handleClick = (x, y) => {
@@ -57,29 +64,47 @@ const MineContainer = ({
   useEffect(() => {
     if (!isOver && open >= length - mineSize) {
       alert('Clear!!');
+      (record > second || !record) && finishGame({ second });
       onReset();
     }
     if (isOver) {
       if (!reset && window.confirm('다시 시작하겠습니까?')) {
         onReset();
       } else {
+        clearInterval(timer);
         setReset(true);
       }
     }
-  }, [reset, isOver, open, finishGame, onReset, setReset]);
+  }, [
+    timer,
+    record,
+    second,
+    reset,
+    isOver,
+    open,
+    finishGame,
+    onReset,
+    setReset,
+  ]);
 
-  // // 처음 버튼을 클릭했을 때 setInterval
-  // useEffect(() => {
-  //   if (start) {
-  //     console.log('Start');
-  //   }
-  // }, [start]);
+  // 처음 버튼을 클릭했을 때 setInterval
+  useEffect(() => {
+    if (start) {
+      console.log('Start');
+      const newTimer =
+        timer ||
+        setInterval(() => {
+          setSecond((cur) => cur + 1);
+        }, 1000);
+      setTimer(newTimer);
+    }
+  }, [start, timer]);
 
   return (
     <MinePresenter
+      second={second}
       array={array}
       mines={mines}
-      isOver={isOver}
       record={record}
       onReset={onReset}
       handleClick={handleClick}

@@ -1,6 +1,6 @@
 const size = 8;
 export const length = size * size;
-export const mineSize = size;
+export const mineSize = 1;
 
 const createArray = () => {
   // 2차원 배열 생성
