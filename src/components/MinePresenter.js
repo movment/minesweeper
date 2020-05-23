@@ -37,7 +37,7 @@ const MinePresenter = ({
     <Container>
       <div>
         <span>남은 지뢰: {mines}</span>
-        {isOver && <button onClick={onReset}>다시 시작하기</button>}
+        {<button onClick={onReset}>다시 시작하기</button>}
       </div>
       <div>
         {array?.map((cur, x) => (
