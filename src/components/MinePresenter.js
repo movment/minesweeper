@@ -28,18 +28,13 @@ const Block = styled.div`
 const MinePresenter = ({
   array,
   mines,
-  record,
   isOver,
   onReset,
   handleClick,
   handleRight,
-  sec,
 }) => {
   return (
     <Container>
-      <span>진행시간: {sec}초</span>
-      <br />
-      <span>최고기록: {record}초</span>
       <div>
         <span>남은 지뢰: {mines}</span>
         {isOver && <button onClick={onReset}>다시 시작하기</button>}
